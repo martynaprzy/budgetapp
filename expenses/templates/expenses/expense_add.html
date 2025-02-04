@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add expense</title>
+</head>
+<body>
+    <h1>Add new expense</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+    <a href="{% url 'expense_list' %}">Go back to expenses list</a>
+</body>
+</html>

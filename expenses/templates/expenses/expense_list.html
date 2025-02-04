@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}List of expenses{% endblock %}
+
+{% block content %}
+<h1 class="text-center">List of expenses</h1>
+<a href="{% url 'expense_create' %}" class="btn btn-primary">Add expense</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for expense in expenses %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ expense.name }}</td>
+            <td>{{ expense.category }}</td>
+            <td>{{ expense.amount }} PLN</td>
+            <td>{{ expense.date }}</td>
+            <td>
+                <a href="{% url 'expense_detail' expense.id %}" class="btn btn-info btn-sm">Details</a>
+                <a href="{% url 'expense_update' expense.id %}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="{% url 'expense_delete' expense.id %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6" class="text-center">No expenses</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
