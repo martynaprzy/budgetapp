@@ -1,5 +1,5 @@
 from django import forms
-from .models import Expense
+from .models import Expense, Income, Budget
 
 class ExpenseForm(forms.ModelForm):
     class Meta:
@@ -8,3 +8,13 @@ class ExpenseForm(forms.ModelForm):
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date'}),
         }
+
+class IncomeForm(forms.ModelForm):
+    class Meta:
+        model = Income
+        fields = ['name', 'amount', 'date']
+
+class BudgetForm(forms.ModelForm):
+    class Meta:
+        model = Budget
+        fields = ['month', 'year', 'limit']

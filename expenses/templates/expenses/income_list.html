@@ -1,0 +1,19 @@
+{% extends 'expenses/base.html' %}
+
+{% block content %}
+    <h2>💰 List of incomes</h2>
+    <ul class="income-list">
+        {% for income in incomes %}
+            <li class="income-item">
+                <strong>{{ income.name }}</strong>  <span class="amount">{{ income.amount }} zł</span> ({{ income.date }})
+                <a href="{% url 'income_edit' income.id %}" class="btn btn-warning">✏️ Edit</a>
+                <a href="{% url 'income_delete' income.id %}" class="btn btn-danger">🗑️ Delete</a>
+            </li>
+        {% empty %}
+            <li>No income</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'income_add' %}" class="btn btn-success">➕ Add income</a>
+    <a href="{% url 'home' %}" class="btn btn-primary back-home-btn">🏠 Go to homepage</a>
+{% endblock %}

@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Expenses list</title>
-</head>
-<body>
-    <h1>Expense details</h1>
-    <p>Name: {{ expense.name }}</p>
-    <p>Category: {{ expense.category }}</p>
-    <p>Amount: {{ expense.amount }} PLN</p>
-    <p>Date: {{ expense.date }}</p>
-    <a href="{% url 'expense_update' expense.id %}">Edytuj</a>
-    <a href="{% url 'expense_delete' expense.id %}">Usuń</a>
-    <a href="{% url 'expense_list' %}">Powrót</a>
+{% extends 'expenses/base.html' %}
 
-</body>
-</html>
+{% block content %}
+    <h2>{{ expense.name }}</h2>
+    <p><strong>Amount:</strong> {{ expense.amount }} zł</p>
+    <p><strong>Category:</strong> {{ expense.category }}</p>
+    <p><strong>Date:</strong> {{ expense.date }}</p>
+
+    <a href="{% url 'expense_list' %}">Go back to expenses list</a>
+{% endblock %}

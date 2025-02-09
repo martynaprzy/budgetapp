@@ -1,0 +1,11 @@
+{% extends 'expenses/base.html' %}
+
+{% block content %}
+    <h1>💼 Budget Management App</h1>
+    
+    <nav class="nav-menu">
+        <a href="{% url 'expense_list' %}">💸 Expenses</a>
+        <a href="{% url 'income_list' %}">💰 Income</a>
+        <a href="{% url 'budget_list' %}">📊 Budget</a>
+    </nav>
+{% endblock %}

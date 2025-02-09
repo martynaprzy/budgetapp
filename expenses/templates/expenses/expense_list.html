@@ -1,41 +1,44 @@
-{% extends 'base.html' %}
-
-{% block title %}List of expenses{% endblock %}
+{% extends 'expenses/base.html' %}
 
 {% block content %}
-<h1 class="text-center">List of expenses</h1>
-<a href="{% url 'expense_create' %}" class="btn btn-primary">Add expense</a>
+    <h2 class="text-center">{{ filter_title|default:"All Expenses" }}</h2>
+    <div class="text-center">
+        <a href="{% url 'expense_add' %}" class="btn btn-success add-expense-btn">➕ Add Expense</a>
+    </div>
+    
+    <div class="filters text-center">
+        <a href="{% url 'expense_list' %}" class="btn btn-primary">All</a>
+        <a href="{% url 'expenses_by_category' 'groceries' %}" class="btn btn-info">groceries</a>
+        <a href="{% url 'expenses_by_category' 'transportation' %}" class="btn btn-info">transportation</a>
+        <a href="{% url 'expenses_by_category' 'education' %}" class="btn btn-info">education</a>
+        <a href="{% url 'expenses_by_category' 'travels' %}" class="btn btn-info">travels</a>
+        <a href="{% url 'expenses_by_category' 'bills' %}" class="btn btn-info">bills</a>
+        <a href="{% url 'expenses_by_category' 'services' %}" class="btn btn-info">services</a>
+        <a href="{% url 'expenses_by_category' 'shopping' %}" class="btn btn-info">shopping</a>
+        <a href="{% url 'expenses_by_year' 2025 %}" class="btn btn-warning year-filter">2025</a>
+        <a href="{% url 'expenses_by_year' 2024 %}" class="btn btn-warning year-filter">2024</a>
+    </div>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Amount</th>
-            <th>Date</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
+    <ul class="expense-list">
         {% for expense in expenses %}
-        <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ expense.name }}</td>
-            <td>{{ expense.category }}</td>
-            <td>{{ expense.amount }} PLN</td>
-            <td>{{ expense.date }}</td>
-            <td>
-                <a href="{% url 'expense_detail' expense.id %}" class="btn btn-info btn-sm">Details</a>
-                <a href="{% url 'expense_update' expense.id %}" class="btn btn-warning btn-sm">Edit</a>
-                <a href="{% url 'expense_delete' expense.id %}" class="btn btn-danger btn-sm">Delete</a>
-            </td>
-        </tr>
+            <li class="expense-item">
+                <div>
+                    <strong>{{ expense.name }}</strong> - {{ expense.amount }} zł 
+                    <em>({{ expense.category }})</em> - {{ expense.date }}
+                </div>
+                <div class="expense-actions">
+                    <a href="{% url 'expense_edit' expense.id %}" class="btn btn-warning edit-btn">✏️ Edit</a>
+                    <a href="{% url 'expense_delete' expense.id %}" class="btn btn-danger delete-btn">🗑️ Delete</a>
+                </div>                
+            </li>
         {% empty %}
-        <tr>
-            <td colspan="6" class="text-center">No expenses</td>
-        </tr>
+            <li class="no-expense">Brak wydatków.</li>
         {% endfor %}
-    </tbody>
-</table>
+    </ul>
+
+    {% if total_amount %}
+        <p class="text-center"><strong>Total for {{ filter_title }}:</strong> {{ total_amount }} zł</p>
+    {% endif %}
+    <a href="{% url 'home' %}" class="btn btn-primary back-home-btn">🏠 Go to homepage</a>
+
 {% endblock %}

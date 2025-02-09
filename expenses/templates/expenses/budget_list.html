@@ -1,0 +1,19 @@
+{% extends 'expenses/base.html' %}
+
+{% block content %}
+    <h2>📊 List of budgets</h2>
+    <ul class="budget-list">
+        {% for budget in budgets %}
+            <li class="budget-item">
+                <strong>{{ budget.month }} {{ budget.year }}</strong> Limit: <span class="amount">{{ budget.limit }} zł</span>
+                <a href="{% url 'budget_edit' budget.id %}" class="btn btn-warning">✏️ Edit</a>
+                <a href="{% url 'budget_delete' budget.id %}" class="btn btn-danger">🗑️ Delete</a>
+            </li>
+        {% empty %}
+            <li>No budgets</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'budget_add' %}" class="btn btn-success">➕ Add budget</a>
+    <a href="{% url 'home' %}" class="btn btn-primary back-home-btn">🏠 Go to homepage</a>
+{% endblock %}

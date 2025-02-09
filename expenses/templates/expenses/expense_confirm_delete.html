@@ -1,14 +1,12 @@
-{% extends 'base.html' %}
-
-{% block title %}Usuń Wydatek{% endblock %}
+{% extends 'expenses/base.html' %}
 
 {% block content %}
-<h1 class="text-center">Usuń Wydatek</h1>
-<p class="text-center">Czy na pewno chcesz usunąć wydatek <strong>{{ object.name }}</strong>?</p>
+    <h2 class="text-center">Usuń Wydatek</h2>
+    <p class="text-center">Czy na pewno chcesz usunąć wydatek <strong>{{ expense.name }}</strong>?</p>
 
-<form method="post" class="text-center">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Usuń</button>
-    <a href="{% url 'expense_list' %}" class="btn btn-secondary">Anuluj</a>
-</form>
+    <form method="post" class="text-center">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Usuń</button>
+        <a href="{% url 'expense_list' %}" class="btn btn-secondary">Anuluj</a>
+    </form>
 {% endblock %}
