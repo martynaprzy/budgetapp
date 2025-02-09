@@ -20,7 +20,7 @@ class ExpenseViewSet(viewsets.ModelViewSet):
 def home(request):
     return render(request, 'expenses/index.html')
 
-# CRUD
+# Expenses
 def expense_list(request):
     expenses = Expense.objects.all().order_by('-date')
     return render(request, 'expenses/expense_list.html', {'expenses': expenses})
@@ -54,7 +54,7 @@ def expense_delete(request, id):
         return redirect('expense_list')
     return render(request, 'expenses/expense_confirm_delete.html', {'expense': expense})
 
-# Filtering views
+# Filtering expenses
 def expenses_by_category(request, category):
     expenses = Expense.objects.filter(category__name=category).order_by('-date')
     return render(request, 'expenses/expense_list.html', {
@@ -71,7 +71,7 @@ def expenses_by_year(request, year):
         'total_amount': total
     })
 
-# Income views
+# Income
 def income_list(request):
     incomes = Income.objects.all().order_by('-date')
     return render(request, 'expenses/income_list.html', {'incomes': incomes})
@@ -86,22 +86,6 @@ def income_add(request):
         form = IncomeForm()
     return render(request, 'expenses/income_add.html', {'form': form})
 
-# Budget views
-def budget_list(request):
-    budgets = Budget.objects.all().order_by('-year', '-month')
-    return render(request, 'expenses/budget_list.html', {'budgets': budgets})
-
-def budget_add(request):
-    if request.method == 'POST':
-        form = BudgetForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('budget_list')
-    else:
-        form = BudgetForm()
-    return render(request, 'expenses/budget_add.html', {'form': form})
-
-# Income 
 def income_edit(request, id):
     income = get_object_or_404(Income, id=id)
     form = IncomeForm(request.POST or None, instance=income)
@@ -118,6 +102,20 @@ def income_delete(request, id):
     return render(request, 'expenses/income_confirm_delete.html', {'income': income})
 
 # Budget
+def budget_list(request):
+    budgets = Budget.objects.all().order_by('-year', '-month')
+    return render(request, 'expenses/budget_list.html', {'budgets': budgets})
+
+def budget_add(request):
+    if request.method == 'POST':
+        form = BudgetForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('budget_list')
+    else:
+        form = BudgetForm()
+    return render(request, 'expenses/budget_add.html', {'form': form})
+
 def budget_edit(request, id):
     budget = get_object_or_404(Budget, id=id)
     form = BudgetForm(request.POST or None, instance=budget)
